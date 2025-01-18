@@ -27,3 +27,30 @@
 //    }
 //    return newHead;
 //}
+
+//206反转链表 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表
+//typedef struct ListNode ListNode;
+//struct ListNode* reverseList(struct ListNode* head) {
+//	  //创建三个指针 初始花 prev指向NULL pcur指向head next指向head->next
+//    ListNode* prev, * pcur, * next;
+//    prev = NULL;
+//	  //检查给的链表是否为空
+//    if (head == NULL) {
+//        return NULL;
+//    }
+//	  //不为空 初始化
+//    pcur = head;
+//    next = head->next;
+//    //循环条件 因为pcur是从head开始的 所以pcur不能NULL
+//    while (pcur) {
+//        //三个指针相继往后移动 并改变指向
+//        pcur->next = prev;
+//        prev = pcur;
+//        pcur = next;
+//        //pcur到尾 next已经是NULL了 需要判断
+//        if (next != NULL)
+//            next = next->next;
+//    }
+//
+//    return prev;
+//}
