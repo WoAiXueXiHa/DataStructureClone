@@ -54,3 +54,16 @@
 //
 //    return prev;
 //}
+
+//876. 链表的中间结点
+//typedef struct ListNode ListNode;
+//struct ListNode* middleNode(struct ListNode* head) {
+//    ListNode* fast, * slow;
+//    fast = slow = head;
+//
+//    while (fast && fast->next) {
+//        fast = fast->next->next;
+//        slow = slow->next;
+//    }
+//    return slow;
+//}
