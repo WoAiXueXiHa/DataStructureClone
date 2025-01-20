@@ -67,3 +67,21 @@
 //    }
 //    return slow;
 //}
+
+//141. »·ĞÎÁ´±í
+//typedef struct ListNode ListNode;
+//bool hasCycle(struct ListNode* head) {
+//    ListNode* fast, * slow;
+//    if (head == NULL) {
+//        return false;
+//    }
+//    fast = slow = head;
+//    while (fast && fast->next) {
+//        slow = slow->next;
+//        fast = fast->next->next;
+//        if (fast == slow) {
+//            return true;
+//        }
+//    }
+//    return false;
+//}
