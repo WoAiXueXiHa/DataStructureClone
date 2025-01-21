@@ -85,3 +85,89 @@
 //    }
 //    return false;
 //}
+
+
+//面试题02.04.分割链表
+/*typedef struct ListNode ListNode;
+struct ListNode* partition(struct ListNode* head, int x) {
+    //创建大小链表的头和尾，这里我采用带哨兵位，避免空链表的讨论
+    ListNode* greaterhead, *shorterhead;
+    ListNode* greatertail, *shortertail;
+    //分别给头尾开辟内存空间
+    greaterhead = greatertail = (ListNode*)malloc(sizeof(ListNode));
+    shorterhead = shortertail = (ListNode*)malloc(sizeof(ListNode));
+    //判断原链表是否为空
+    if(head == NULL){
+        return NULL;
+    }
+    //创建临时变量来遍历原链表
+    ListNode* pcur = head;
+    while(pcur){
+        //小于x，尾插到小链表
+        if(pcur->val < x){
+            shortertail->next = pcur;
+            shortertail = shortertail->next;
+        }
+        //大于等于x，尾插到大链表
+        else{
+            greatertail->next = pcur;
+            greatertail = greatertail->next;
+        }
+        //继续遍历原链表
+        pcur = pcur->next;
+    }
+     //避免成环
+    greatertail->next = NULL;
+    //大小判断完成，链接小链表的尾和大链表的头
+    shortertail->next = greaterhead ->next;
+    //手动开辟内存空间，不使用时需要手动释放
+    ListNode* ret = shorterhead->next;
+    free(greaterhead);
+    free(shorterhead);
+
+    return ret;
+}*/
+
+//160.相交链表
+/*typedef struct ListNode ListNode;
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
+    //创建临时变量遍历两个链表
+    ListNode* pcurA, *pcurB;
+    pcurA = headA, pcurB = headB;
+    //记录两个链表长度
+    int lenA = 0;
+    int lenB = 0;
+
+    while(pcurA){
+        lenA++;
+        pcurA = pcurA->next;       
+    }
+    while(pcurB){
+        lenB++;
+        pcurB = pcurB->next;
+    }
+    //记录长度差
+    int datance = abs(lenA - lenB);
+    //没有交点
+    if(pcurA != pcurB){
+        return NULL;
+    }
+    //假设法，认为一个链表长，一个短，再用if语句判断假设是否正确
+    ListNode* longlist = headA;
+    ListNode* shortlist = headB;
+
+    if(lenB > lenA){
+        longlist = headB;
+        shortlist = headA;
+    }
+    //长的先走长度差
+    while(datance--){
+        longlist = longlist->next;
+    }
+    //两个链表不相等，一直走下去，找到交点
+    while(longlist != shortlist){
+        longlist = longlist->next;
+        shortlist = shortlist->next;
+    }
+    return shortlist;
+}*/
