@@ -1,5 +1,4 @@
 //203 给你一个链表的头节点head和一个整数 val 
-// 请你删除链表中所有满足Node.val == val 的节点，并返回新的头节点
 //typedef struct ListNode ListNode;
 //struct ListNode* removeElements(struct ListNode* head, int val) {
 //    ListNode* newHead, * newTail;
@@ -86,6 +85,35 @@
 //    return false;
 //}
 
+//142. 环形链表2
+/*typedef struct ListNode ListNode;
+struct ListNode *detectCycle(struct ListNode *head) {
+    ListNode* fast, *slow;
+    //链表为空，直接返回
+    if(head == NULL){
+        return NULL;
+    }
+    //判断链表是否带环
+    bool cylce = false;
+    fast = slow = head;
+    while(fast && fast->next){
+        fast = fast->next->next;
+        slow = slow->next;
+        if(fast == slow){
+            cylce = true;
+            break;//相遇了直接退出
+        }
+    }
+    //不带环直接返回空
+    if(cylce == false) return NULL;
+    //带环，找入口点，根据公式L = C - X
+    fast = head;
+    while(fast != slow){
+        fast = fast->next;
+        slow = slow->next;
+    }
+    return fast;
+}*/
 
 //面试题02.04.分割链表
 /*typedef struct ListNode ListNode;
