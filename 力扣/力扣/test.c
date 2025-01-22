@@ -199,3 +199,63 @@ struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *he
     }
     return shortlist;
 }*/
+
+//138.随机链表的复制
+/*
+typedef struct Node Node;
+struct Node* copyRandomList(struct Node* head) {
+    if (head == NULL) return NULL;
+
+    Node* pcur = head;
+    //拷贝链表并尾插到原链表之后
+    while (pcur) {
+        //创建新的节点
+        Node* newnode = (Node*)malloc(sizeof(Node));
+        //拷贝原节点的值到新节点
+        newnode->val = pcur->val;
+        //尾插到原节点之后
+        newnode->next = pcur->next;
+        pcur->next = newnode;
+        //迭代遍历原链表
+        pcur = newnode->next;
+    }
+
+    //控制newnode的random
+    pcur = head;
+    while (pcur) {
+        Node* newnode = pcur->next;
+
+        if (pcur->random == NULL) {
+            newnode->random = NULL;
+        }
+        else {
+            newnode->random = pcur->random->next;
+        }
+        //迭代遍历原链表
+        pcur = newnode->next;
+    }
+
+    //链接拷贝链表并恢复原链表
+    pcur = head;
+    //创建拷贝链表的头和尾
+    Node* newhead, * newtail;
+    newhead = newtail = NULL;
+    while (pcur) {
+        Node* newnode = pcur->next;
+        Node* next = newnode->next;
+        //判断新链表是否为空
+        if (newtail == NULL) {
+            newhead = newtail = newnode;
+        }
+        //尾插
+        else {
+            newtail->next = newnode;
+            newtail = newtail->next;
+        }
+        //迭代
+        pcur->next = next;
+        //恢复原链表
+        pcur = next;
+    }
+    return newhead;
+}*/
