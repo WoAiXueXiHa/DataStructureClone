@@ -2,102 +2,113 @@
 
 //初始化队列
 void QueueInit(Queue* pq) {
+	//检查指针有效性
 	assert(pq);
 
 	pq->phead = pq->ptail = NULL;
 	pq->size = 0;
 }
 
-//销毁队列
-void QueueDestory(Queue* pq) {
+//数据入队列
+void QueuePush(Queue* pq, QDataType val) {
+	//检查指针有效性
 	assert(pq);
 
-	QNode* cur = pq->phead;
-	while (cur) {
-		QNode* next = cur->next;
-		free(cur);
-		cur = next;
-	}
-	pq->phead = pq->ptail = NULL;
-	pq->size = 0;
-}
-//队尾入队列
-void QueuePush(Queue* pq, QDataType data) {
-	assert(pq);
-	//创建新的节点，准备入队
+	//创建新节点
 	QNode* newNode = (QNode*)malloc(sizeof(QNode));
+	//检查内存是否申请成功
 	if (newNode == NULL) {
-		perror("malloc() error");
+		perror("malloc err!");
 		return;
 	}
-	//新节点创建成功
+	//初始化newNode
+	newNode->data = val;
 	newNode->next = NULL;
-	newNode->val = data;
-	//如果队列不为空
-	if (pq->ptail) {
-		// 将原队列尾部节点的 next 指针指向新节点，使新节点成为队列的新尾部
-		pq->ptail->next = newNode;
-		// 更新队列的尾部指针 ptail，使其指向新节点
-		//newNode是局部变量，出作用域就销毁
-		pq->ptail = newNode;
-	}
-	else {
+
+	//队列为空的情况
+	if (pq->phead == NULL) {
 		pq->phead = pq->ptail = newNode;
 	}
+
+	//队列不为空，尾插
+	pq->ptail->next = newNode;
+	pq->ptail = newNode;
+
+	//队列有效数据增加
 	pq->size++;
 
 }
 
-//队头出队列
+//数据出队列
 void QueuePop(Queue* pq) {
+	//检查指针有效性
 	assert(pq);
+	//队列保证不能为空，暴力检查
+	assert(!QueueEmpty(pq));
 
-	//暴力检查 如果队列为空 则元素不能出队列
-	assert(pq->phead != NULL);
-
-	//如果队列中只有一个元素
+	//队列只有一个节点
 	if (pq->phead->next == NULL) {
-		free(pq->phead);
 		pq->phead = pq->ptail = NULL;
 	}
+	//队列有多个节点，头删
 	else {
 		QNode* next = pq->phead->next;
 		free(pq->phead);
 		pq->phead = next;
 	}
+	//队列有效元素个数减少
 	pq->size--;
 }
-
-
-//查找队列有效元素个数
-size_t QueueSize(Queue* pq) {
+//获取队列有效元素个数
+size_t QueueSize(Queue* pq){
+	//检查指针有效性
 	assert(pq);
 
 	return pq->size;
 }
-
-//获取队列头部元素
-QDataType QueueFront(Queue* pq) {
+//获取队首元素值
+QDataType QueueFrontVal(Queue* pq) {
+	//检查指针有效性
 	assert(pq);
-	assert(pq->phead);
+	// 暴力检查 
+	assert(pq->phead != NULL);
 
-	return pq->phead->val;
+	return pq->phead->data;
 }
 
-//获取队列尾部元素
-QDataType QueueBack(Queue* pq) {
+//获取队尾元素值
+QDataType QueueBackVal(Queue* pq) {
+	//检查指针有效性
 	assert(pq);
-	assert(pq->ptail);
+	// 暴力检查 
+	assert(pq->ptail != NULL);
 
-	return pq->ptail->val;
+	return pq->ptail->data;
 }
 
-//检测队列是否为空
+//检查队列是否为空
 bool QueueEmpty(Queue* pq) {
+	//检查指针有效性
 	assert(pq);
 
 	return pq->size == 0;
 }
 
+//销毁队列
+void QueueDestory(Queue* pq) {
+	//检查指针有效性
+	assert(pq);
 
 
+	QNode* cur = pq->phead;
+	while (cur)
+	{
+		QNode* next = cur->next;
+		free(cur);
+
+		cur = next;
+	}
+
+	pq->phead = pq->ptail = NULL;
+	pq->size = 0;
+}

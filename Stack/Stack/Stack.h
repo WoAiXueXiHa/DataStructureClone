@@ -5,25 +5,31 @@
 #include <stdbool.h>
 #include <assert.h>
 
+//定义一个栈
 typedef int STDataType;
-typedef struct Stack{
-	STDataType* arr;
-	int size;
-	int capacity;
-}ST;
+typedef struct Stack {
+	size_t top;//栈顶
+	size_t capacity;//容量
+	STDataType* arr;//大小可变的数组
+}Stack;
 
 //初始化栈
-void STInit(ST* ps);
-//销毁栈
-void STDestory(ST* ps);
-//压栈
-void STPush(ST* ps, STDataType data);
-//出栈
-void STPop(ST* ps);
-//检查栈是否为空
-bool STEmpty(ST* ps);
-//栈的大小，获取栈中有效元素个数
-int STSize(ST* ps);
-//获取栈顶元素
-STDataType STTop(ST* ps);
+void StackInit(Stack* ps);
 
+//数据入栈
+void StackPush(Stack* ps, STDataType val);
+
+//数据出栈
+void StackPop(Stack* ps);
+
+//查找栈顶元素
+STDataType StackTopVal(Stack* ps);
+
+//检查栈的有效数据个数
+size_t StackSize(Stack* ps);
+
+//检查栈是否为空
+bool StackEmpty(Stack* ps);
+
+//销毁栈
+void StackDestory(Stack* ps);

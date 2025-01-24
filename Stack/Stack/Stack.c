@@ -1,77 +1,82 @@
 #include "Stack.h"
 
 //初始化栈
-void STInit(ST* ps) {
+void StackInit(Stack* ps) {
+	//检查指针有效性
 	assert(ps);
 
 	ps->arr = NULL;
-	//指向栈顶元素的下一个
-	ps->capacity = ps->size = 0;
+	ps->capacity = ps->top = 0;//top指向栈顶的后一个元素
+}
+
+//数据入栈
+void StackPush(Stack* ps, STDataType val) {
+	//检查指针有效性
+	assert(ps);
+
+	//检查容量并扩容
+	if (ps->top == ps->capacity) {
+		//原始容量可能为0，需要利用三目操作符判断并扩容
+		size_t newCapacity = ps->capacity == 0 ? 4 : 2 * ps->capacity;
+		//在堆上开辟新的数组
+		STDataType* tmp = (STDataType*)malloc(newCapacity * sizeof(STDataType));
+		//检查malloc是否成功
+		if (tmp == NULL) {
+			perror("malloc err!");
+			return;
+		}
+		ps->capacity = newCapacity;
+		ps->arr = tmp;
+		free(tmp);
+	}
+
+	ps->arr[ps->top++] = val;
+
+}
+
+//数据出栈
+void StackPop(Stack* ps) {
+	//检查指针有效性
+	assert(ps);
+	
+	if (!StackEmpty(ps)) {
+		ps->top--;
+	}
+}
+
+//查找栈顶元素
+STDataType StackTopVal(Stack* ps) {
+	//检查指针有效性
+	assert(ps);
+
+	if (!StackEmpty(ps)) {
+		return ps->arr[ps->top - 1];
+	}
+
+}
+
+//检查栈的有效数据个数
+size_t StackSize(Stack* ps) {
+	//检查指针有效性
+	assert(ps);
+
+	return ps->top;
+}
+
+//检查栈是否为空
+bool StackEmpty(Stack* ps) {
+	//检查指针有效性
+	assert(ps);
+
+	return ps->top == 0;
 }
 
 //销毁栈
-void STDestory(ST* ps) {
+void StackDestory(Stack* ps) {
+	//检查指针有效性
 	assert(ps);
 
 	free(ps->arr);
 	ps->arr = NULL;
-	ps->capacity = ps->size = 0;
-}
-
-//压栈
-void STPush(ST* ps, STDataType data) {
-	assert(ps);
-
-	//空间不够 扩容
-	if (ps->size == ps->capacity) {
-		int newcapacity = ps->capacity == 0 ? 4 : ps->capacity * 2;
-		STDataType* tmp = (STDataType*)realloc(ps->arr, newcapacity * sizeof(STDataType));
-		if (tmp == NULL) {
-			perror("realloc() err");
-			return;
-		}
-		//扩容成功
-		ps->arr = tmp;
-		ps->capacity = newcapacity;
-	}
-	//插入数据，有效数据个数加一
-	ps->arr[ps->size++] = data;
-}
-
-//出栈
-void STPop(ST* ps) {
-	assert(ps);
-	//栈不能为空
-	assert(!STEmpty(ps));
-
-	ps->size--;
-}
-
-//检查栈是否为空
-bool STEmpty(ST* ps) {
-	assert(ps);
-	//直接判断返回值
-	return ps->size == 0;
-}
-
-//栈的大小，获取栈中有效元素个数
-int STSize(ST* ps) {
-	assert(ps);
-
-	return ps->size;
-}
-
-//获取栈顶元素
-STDataType STTop(ST* ps) {
-	assert(ps);
-	//栈不能为空
-	assert(!STEmpty(ps));
-
-	if (ps->arr == NULL) {
-		free(ps->arr);
-		return;
-	}
-	//指向栈顶元素
-	return ps->arr[ps->size - 1];
-	
+	ps->capacity = ps->top = 0;
 }

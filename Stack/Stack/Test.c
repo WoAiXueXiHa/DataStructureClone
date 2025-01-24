@@ -12,7 +12,7 @@
 //
 //	while (!STEmpty(&s))
 //	{
-//		int top = STTop(&s);
+//		int top = STTopVal(&s);
 //		printf("%d ", top);
 //		STPop(&s);
 //	}
@@ -33,7 +33,7 @@ int main() {
 	QueuePush(&q, 5);
 
 	while (!QueueEmpty(&q)) {
-		printf("%d ", QueueFront(&q));
+		printf("%d ", QueueFrontVal(&q));
 		QueuePop(&q);
 	}
 
