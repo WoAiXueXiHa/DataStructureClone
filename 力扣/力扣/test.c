@@ -259,3 +259,112 @@ struct Node* copyRandomList(struct Node* head) {
     }
     return newhead;
 }*/
+
+//20.有效的括号
+/*bool isValid(char* s) {
+    Stack st;
+    StackInit(&st);
+
+    while (*s) {
+        if (*s == '(' || *s == '{' || *s == '[') {
+            StackPush(&st, *s);
+        }
+        else {
+            //右括号比左括号多
+            if (StackEmpty(&st)) {
+                StackDestory(&st);
+                return false;
+            }
+
+            char top = StackTopVal(&st);
+            StackPop(&st);
+
+            //括号不匹配
+            if ((*s == ']' && top != '[')
+             || (*s == '}' && top != '{')
+             || (*s == ')' && top != '('))
+            {
+                StackDestory(&st);
+                return false;
+            }
+        }
+        s++;
+    }
+
+    //左括号比右括号多
+    bool ret = StackEmpty(&st);
+    StackDestory(&st);
+    return ret;
+}*/
+
+//225.用队列实现栈
+/*typedef struct {
+    Queue q1;
+    Queue q2;    
+} MyStack;
+
+//创建栈
+MyStack* myStackCreate() {
+    MyStack* pst = (MyStack*)malloc(sizeof(MyStack));
+    QueueInit(&pst->q1);
+    QueueInit(&pst->q2);
+
+    return pst;
+}
+
+void myStackPush(MyStack* obj, int x) {
+    assert(obj);
+    //入数据到不为空的队列 如果两个队列都为空 入数据到q2
+    if(!QueueEmpty(&obj->q1)){
+        QueuePush(&obj->q1, x);
+    }
+    else{
+        QueuePush(&obj->q2, x);
+    } 
+}
+
+int myStackPop(MyStack* obj) {
+    assert(obj);
+
+    //假设&obj->q1为空，&obj->q2不为空
+    Queue* pEmpty = &obj->q1;
+     Queue* pNonEmpty = &obj->q2;
+    //假设错误
+    if(!QueueEmpty(&obj->q1)){
+        pEmpty =  &obj->q2;
+        pNonEmpty = &obj->q1;
+    }
+
+    while(QueueSize(pNonEmpty) > 1){
+        int front = QueueFrontVal(pNonEmpty);
+        QueuePush(pEmpty,front);
+        QueuePop(pNonEmpty);
+    }  
+    int top = QueueFrontVal(pNonEmpty);
+    QueuePop(pNonEmpty);
+    return top; 
+}
+
+int myStackTop(MyStack* obj) {
+    assert(obj);
+    //栈顶元素实际是不为空队列的队尾元素
+    if(!QueueEmpty(&obj->q1)){
+        return QueueBackVal(&obj->q1);
+    }
+    else{
+        return  QueueBackVal(&obj->q2);
+    }
+}
+
+bool myStackEmpty(MyStack* obj) {
+    return QueueEmpty(&obj->q1) && QueueEmpty(&obj->q2);
+}
+
+void myStackFree(MyStack* obj) {
+    QueueDestory(&obj->q1);
+    QueueDestory(&obj->q2);
+
+    free(obj);
+}
+
+*/

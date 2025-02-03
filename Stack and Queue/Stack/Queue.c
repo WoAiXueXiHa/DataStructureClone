@@ -30,13 +30,18 @@ void QueuePush(Queue* pq, QDataType val) {
 		pq->phead = pq->ptail = newNode;
 	}
 
-	//队列不为空，尾插
-	pq->ptail->next = newNode;
-	pq->ptail = newNode;
+	//队列为空的情况
+	if (pq->phead == NULL) {
+		pq->phead = pq->ptail = newNode;
+	}
+	else {
+		// 队列不为空，尾插
+		pq->ptail->next = newNode;
+		pq->ptail = newNode;
+	}
 
 	//队列有效数据增加
 	pq->size++;
-
 }
 
 //数据出队列
@@ -48,6 +53,7 @@ void QueuePop(Queue* pq) {
 
 	//队列只有一个节点
 	if (pq->phead->next == NULL) {
+		free(pq->phead);
 		pq->phead = pq->ptail = NULL;
 	}
 	//队列有多个节点，头删

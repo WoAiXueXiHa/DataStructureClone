@@ -27,7 +27,6 @@ void StackPush(Stack* ps, STDataType val) {
 		}
 		ps->capacity = newCapacity;
 		ps->arr = tmp;
-		free(tmp);
 	}
 
 	ps->arr[ps->top++] = val;
