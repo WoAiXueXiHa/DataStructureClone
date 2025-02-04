@@ -8,6 +8,13 @@ void StackInit(Stack* ps) {
 	ps->arr = NULL;
 	ps->capacity = ps->top = 0;//top指向栈顶的后一个元素
 }
+//检查栈是否为空
+bool StackEmpty(Stack* ps) {
+	//检查指针有效性
+	assert(ps);
+
+	return ps->top == 0;
+}
 
 //数据入栈
 void StackPush(Stack* ps, STDataType val) {
@@ -37,7 +44,7 @@ void StackPush(Stack* ps, STDataType val) {
 void StackPop(Stack* ps) {
 	//检查指针有效性
 	assert(ps);
-	
+
 	if (!StackEmpty(ps)) {
 		ps->top--;
 	}
@@ -51,7 +58,9 @@ STDataType StackTopVal(Stack* ps) {
 	if (!StackEmpty(ps)) {
 		return ps->arr[ps->top - 1];
 	}
-
+	else {
+		return -1;
+	}
 }
 
 //检查栈的有效数据个数
@@ -60,14 +69,6 @@ size_t StackSize(Stack* ps) {
 	assert(ps);
 
 	return ps->top;
-}
-
-//检查栈是否为空
-bool StackEmpty(Stack* ps) {
-	//检查指针有效性
-	assert(ps);
-
-	return ps->top == 0;
 }
 
 //销毁栈
