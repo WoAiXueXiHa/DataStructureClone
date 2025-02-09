@@ -17,5 +17,6 @@ void HeapInit(hp* ph);
 void HeapPush(hp* ph, HpDataType val);
 void HeapPop(hp* ph);
 HpDataType HeapTop(hp* ph);
+HpDataType HeapPeek(hp* ph);
 void HeapDestory(hp* ph);
 bool HeapEmpty(hp* ph);
