@@ -7,6 +7,29 @@ void HeapInit(hp* ph) {
 	ph->size = ph->capacity = 0;
 }
 
+void HeapCreate(hp* ph, HpDataType* arr, size_t size) {
+	assert(ph);
+	//给数组开辟空间
+	ph->arr = (HpDataType*)malloc(sizeof(HpDataType) * size);
+	if (ph->arr == NULL) {
+		perror("malloc err!");
+		return;
+	}
+	//拷贝传过来的数组
+	memcpy(ph->arr, arr, sizeof(HpDataType) * size);
+	ph->size = ph->capacity = size;
+
+	//调整堆的过程，从最后一个非叶子节点开始
+	for (int i = (size - 1 - 1) / 2; i >= 0; i--) {
+		AdjustDown(ph->arr, size, i);
+	}
+
+}
+
+void HeapCreate(hp* ph, HpDataType* arr, size_t size) {
+
+
+}
 void HeapDestory(hp* ph) {
 	assert(ph);
 
