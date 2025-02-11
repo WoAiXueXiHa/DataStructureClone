@@ -13,3 +13,22 @@
 //	HeapDestory(&Heap);
 //	return 0;
 //}
+
+//int main() {
+//	int arr[] = { 4,10,3,5,1 };
+//
+//	HeapSort(arr, 5);
+//	for (size_t i = 0; i < 5; i++)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//
+//	return 0;
+//}
+
+int main() {
+
+	/*DataCreate();*/
+	HeapTopK();
+	return 0;
+}

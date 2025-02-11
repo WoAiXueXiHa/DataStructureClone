@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-
+#include <time.h>
 
 //定义堆的结构，底层是数组
 typedef int HpDataType;
@@ -17,9 +17,22 @@ typedef struct Heap {
 
 void HeapInit(hp* ph);
 void HeapCreate(hp* ph,HpDataType* arr, size_t size);
+
 void HeapPush(hp* ph, HpDataType val);
 void HeapPop(hp* ph);
+
 HpDataType HeapTop(hp* ph);
-HpDataType HeapPeek(hp* ph);
+
 void HeapDestory(hp* ph);
 bool HeapEmpty(hp* ph);
+
+Swap(HpDataType* pa, HpDataType* pb);
+AdjustUp(HpDataType* arr, size_t child);
+AdjustDown(HpDataType* arr, size_t size, size_t parent);
+
+void HeapSort(HpDataType* arr, size_t size);
+
+void DataCreate();
+void HeapTopK();
+
+

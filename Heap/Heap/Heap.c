@@ -26,10 +26,6 @@ void HeapCreate(hp* ph, HpDataType* arr, size_t size) {
 
 }
 
-void HeapCreate(hp* ph, HpDataType* arr, size_t size) {
-
-
-}
 void HeapDestory(hp* ph) {
 	assert(ph);
 
@@ -132,4 +128,94 @@ bool HeapEmpty(hp* ph) {
 	assert(ph);
 
 	return ph->size == 0;
+}
+
+void HeapSort(HpDataType* arr, int size) {
+	// 建堆 升序建大根堆 降序建小根堆
+	for (int i = (size - 2) / 2; i >= 0; i--) {
+		AdjustDown(arr, size, i);
+	}
+
+	// 排序
+	int end = size - 1;
+	while (end > 0) {
+		Swap(&arr[0], &arr[end]);  
+		AdjustDown(arr, end, 0);   
+		end--;
+	}
+}
+
+void DataCreate()
+{
+	// 造数据
+	int n = 99;
+	srand(time(0));
+	FILE* fp = fopen("D:\CODE\DataStructure\DataStructureClone\Heap\data.x", "w");
+	if (fp == NULL)
+	{
+		perror("fopen error");
+		return;
+	}
+
+	for (int i = 0; i < n; ++i)
+	{
+		int x = (rand() + i) % 99;
+		fprintf(fp, "%d\n", x);
+	}
+
+	fclose(fp);
+}
+
+void HeapTopK() {
+	//输入指令
+	printf("请输入k:");
+	int k = 0;
+	scanf_s("%d", &k);
+
+	//创建随机数据
+	DataCreate();
+
+	//读取文件中k个数据
+	FILE* fout = fopen("D:\CODE\DataStructure\DataStructureClone\Heap\data.x", "r");
+	if (fout == NULL)
+	{
+		perror("fopen error");
+		return;
+	}
+
+	int val = 0;
+	int* minheap = (int*)malloc(sizeof(int) * k);
+	if (minheap == NULL)
+	{
+		perror("malloc error");
+		return;
+	}
+
+	for (int i = 0; i < k; i++)
+	{
+		fscanf_s(fout, "%d", &minheap[i]);
+	}
+	//创建小堆
+	for (int i = (k - 1 - 1) / 2; i >= 0; i--)
+	{
+		AdjustDown(minheap, k, i);
+	}
+
+	int x = 0;
+	while (fscanf_s(fout, "%d", &x) != EOF)
+	{
+		// 读取剩余数据，比堆顶的值大，就替换他进堆
+		if (x > minheap[0])
+		{
+			minheap[0] = x;
+			AdjustDown(minheap, k, 0);
+		}
+	}
+
+	for (int i = 0; i < k; i++)
+	{
+		printf("%d ", minheap[i]);
+	}
+
+	fclose(fout);
 }
