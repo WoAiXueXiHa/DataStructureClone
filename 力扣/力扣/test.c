@@ -368,3 +368,28 @@ void myStackFree(MyStack* obj) {
 }
 
 */
+
+//965.单值二叉树
+/*bool isUnivalTree(struct TreeNode* root) {
+    if(root == NULL) return true;
+
+    if(root->left && root->val != root->left->val){
+        return false;
+    }
+
+    if(root->right && root->val != root->right->val){
+        return false;
+    }
+
+    return isUnivalTree(root->left) && isUnivalTree(root->right);
+
+}*/
+
+//104. 二叉树的最大深度
+/*int maxDepth(struct TreeNode* root) {
+    if(root == NULL)
+        return 0;
+    int left = maxDepth(root->left);
+    int right = maxDepth(root->right);
+    return left > right ? left + 1 : right + 1;   
+}*/
