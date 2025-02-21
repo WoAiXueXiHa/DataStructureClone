@@ -9,10 +9,15 @@ typedef char BTDataType;
 
 typedef struct BinaryTreeNode
 {
-	BTDataType _data;
-	struct BinaryTreeNode* _left;
-	struct BinaryTreeNode* _right;
+	BTDataType data;
+	struct BinaryTreeNode* left;
+	struct BinaryTreeNode* right;
 }BTNode;
+//创建新的节点
+BTNode* BuyNode(BTDataType val);
+
+//手搓一颗树
+BTNode* TreeCreate(BTNode* root);
 
 // 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
 BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi);
@@ -36,3 +41,7 @@ void BinaryTreePostOrder(BTNode* root);
 void BinaryTreeLevelOrder(BTNode* root);
 // 判断二叉树是否是完全二叉树
 int BinaryTreeComplete(BTNode* root);
+//二叉树的高度
+int BinaryTreeHeight(BTNode* root);
+//第k层节点个数
+int BinaryTreeKSize(BTNode* root, int k);
