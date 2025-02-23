@@ -126,22 +126,16 @@ void BinaryTreeLevelOrder(BTNode* root) {
 	QueueInit(&helpQueue);
 	//将二叉树的节点放入队列 再取出即可
 
-	if (root == NULL) {
-		return;
-	}
-
-	QueuePush(&helpQueue, root);
+	if (root != NULL)
+		QueuePush(&helpQueue, root);
 	while (!QueueEmpty) {
 		BTNode* front = QueueFrontVal(&helpQueue);
-		printf("%d ", front->data);
+		QueuePop(&helpQueue);
 		//带入下一层
 		if (front != NULL) {
-			if (root->left != NULL) {
-				QueuePush(&helpQueue, root->left);
-			}
-			if (root->right != NULL) {
-				QueuePush(&helpQueue, root->right);
-			}
+			printf("%d ", front->data);
+			QueuePush(&helpQueue, root->left);
+			QueuePush(&helpQueue, root->right);
 		}
 	}
 	printf("\n");
@@ -170,3 +164,31 @@ void BinaryTreeDestory(BTNode** root) {
 	BinaryTreeDestory((*root)->right);
 	free(*root);
 }
+
+// 判断二叉树是否是完全二叉树
+bool BinaryTreeComplete(BTNode* root) {
+	Queue helpQueue;
+	QueueInit(&helpQueue);
+	//将二叉树的节点放入队列 再取出即可
+
+	if (root != NULL)
+		QueuePush(&helpQueue, root);
+
+	while (!QueueEmpty) {
+		BTNode* front = QueueFrontVal(&helpQueue);
+		printf("%d ", front->data);
+		//带入下一层
+		if (front != NULL) {
+			if (root->left != NULL) {
+				QueuePush(&helpQueue, root->left);
+			}
+			if (root->right != NULL) {
+				QueuePush(&helpQueue, root->right);
+			}
+		}
+	}
+	printf("\n");
+
+	QueueDestory(&helpQueue);
+}
+

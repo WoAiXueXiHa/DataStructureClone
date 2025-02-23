@@ -6,7 +6,6 @@
 #include <stdbool.h>
 
 typedef char BTDataType;
-
 typedef struct BinaryTreeNode
 {
 	BTDataType data;
@@ -50,7 +49,7 @@ void BinaryTreePostOrder(BTNode* root);
 void BinaryTreeLevelOrder(BTNode* root);
 
 // 判断二叉树是否是完全二叉树
-int BinaryTreeComplete(BTNode* root);
+bool BinaryTreeComplete(BTNode* root);
 
 //二叉树的高度
 int BinaryTreeHeight(BTNode* root);
