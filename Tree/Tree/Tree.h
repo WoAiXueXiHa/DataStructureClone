@@ -16,7 +16,7 @@ typedef struct BinaryTreeNode
 BTNode* BuyNode(BTDataType val);
 
 //手搓一颗树
-BTNode* TreeCreate(BTNode* root);
+BTNode* TreeCreate();
 
 // 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
 BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi);

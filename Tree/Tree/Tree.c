@@ -8,13 +8,13 @@ BTNode* BuyNode(BTDataType val) {
 		return;
 	}
 	newnode->data = val;
-	newnode->left = newnode->right;
+	newnode->left = newnode->right = NULL;
 
 	return newnode;
 }
 
 //手搓一颗树 层序：1 2 4 3 N 5 6
-BTNode* TreeCreate(BTNode* root) {
+BTNode* TreeCreate() {
 	BTNode* n1 = BuyNode(1);
 	BTNode* n2 = BuyNode(2);
 	BTNode* n3 = BuyNode(3);
@@ -33,13 +33,8 @@ BTNode* TreeCreate(BTNode* root) {
 
 // 二叉树节点个数
 int BinaryTreeSize(BTNode* root) {
-	//无节点
-	if (root == NULL) {
-		return 0;
-	}
-
 	//分治的思想 分别统计左子树节点个数和右子树节点个数 最后加上根节点自己
-	return BinaryTreeSize(root->left) + BinaryTreeSize(root->right) + 1;
+	return root == NULL ? 0 : BinaryTreeSize(root->left) + BinaryTreeSize(root->right) + 1;
 }
 
 // 二叉树第k层节点个数
@@ -122,23 +117,29 @@ void BinaryTreePostOrder(BTNode* root) {
 
 // 层序遍历 利用队列性质
 void BinaryTreeLevelOrder(BTNode* root) {
+	//创建一个队列来存储二叉树的数据
 	Queue helpQueue;
 	QueueInit(&helpQueue);
-	//将二叉树的节点放入队列 再取出即可
-
+	//根不为空，入队列
 	if (root != NULL)
 		QueuePush(&helpQueue, root);
-	while (!QueueEmpty) {
+	//不断地入队列 出队列 一层出 一层进
+	while (!QueueEmpty(&helpQueue)) {
+
 		BTNode* front = QueueFrontVal(&helpQueue);
 		QueuePop(&helpQueue);
-		//带入下一层
+
 		if (front != NULL) {
+			//front不为空，打印下来
 			printf("%d ", front->data);
-			QueuePush(&helpQueue, root->left);
-			QueuePush(&helpQueue, root->right);
+			//带入下一层
+			QueuePush(&helpQueue, front->left);
+			QueuePush(&helpQueue, front->right);
+		}
+		else {
+			printf("N ");
 		}
 	}
-	printf("\n");
 
 	QueueDestory(&helpQueue);
 }
