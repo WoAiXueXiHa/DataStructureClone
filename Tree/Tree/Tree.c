@@ -75,6 +75,7 @@ BTNode* BinaryTreeFind(BTNode* root, BTDataType x) {
 	if (findRight != NULL) {
 		return findRight;
 	}
+	return NULL;
 }
 
 // 二叉树前序遍历 根 左 右
@@ -98,9 +99,9 @@ void BinaryTreeInOrder(BTNode* root) {
 		return;
 	}
 
-	BinaryTreePrevOrder(root->left);
+	BinaryTreeInOrder(root->left);
 	printf("%d ", root->data);
-	BinaryTreePrevOrder(root->right);
+	BinaryTreeInOrder(root->right);
 }
 
 // 二叉树后序遍历 左 右 根
@@ -110,8 +111,8 @@ void BinaryTreePostOrder(BTNode* root) {
 		return;
 	}
 
-	BinaryTreeInOrder(root->left);
-	BinaryTreeInOrder(root->right);
+	BinaryTreePostOrder(root->left);
+	BinaryTreePostOrder(root->right);
 	printf("%d ", root->data);
 }
 
@@ -164,32 +165,43 @@ void BinaryTreeDestory(BTNode** root) {
 	BinaryTreeDestory((*root)->left);
 	BinaryTreeDestory((*root)->right);
 	free(*root);
+	*root = NULL;
 }
 
 // 判断二叉树是否是完全二叉树
 bool BinaryTreeComplete(BTNode* root) {
 	Queue helpQueue;
 	QueueInit(&helpQueue);
-	//将二叉树的节点放入队列 再取出即可
 
-	if (root != NULL)
-		QueuePush(&helpQueue, root);
+	// 空树视为完全二叉树
+	if (root == NULL) {
+		QueueDestroy(&helpQueue);
+		return true;
+	}
 
-	while (!QueueEmpty) {
+	QueuePush(&helpQueue, root);
+	bool reachNull = false; // 标记是否遇到空节点
+
+	while (!QueueEmpty(&helpQueue)) {
 		BTNode* front = QueueFrontVal(&helpQueue);
-		printf("%d ", front->data);
-		//带入下一层
-		if (front != NULL) {
-			if (root->left != NULL) {
-				QueuePush(&helpQueue, root->left);
+		QueuePop(&helpQueue);
+
+		if (front) {
+			// 如果之前已遇到空节点，但当前节点非空 → 不完全
+			if (reachNull) {
+				QueueDestroy(&helpQueue);
+				return false;
 			}
-			if (root->right != NULL) {
-				QueuePush(&helpQueue, root->right);
-			}
+			// 无论子节点是否为空都入队
+			QueuePush(&helpQueue, front->left);
+			QueuePush(&helpQueue, front->right);
+		}
+		else {
+			// 首次遇到空节点时设置标记
+			reachNull = true;
 		}
 	}
-	printf("\n");
 
-	QueueDestory(&helpQueue);
+	QueueDestroy(&helpQueue);
+	return true;
 }
-
