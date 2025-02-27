@@ -123,3 +123,71 @@ void ShellSort(int* arr, size_t size) {
 	}
 	
 }
+
+//快速排序
+void QuickSort(int* arr, int left, int right) {
+
+	if (left >= right)
+		return;
+	int begin = left, end = right;
+	//第一轮
+	
+	int basei = left;
+	while (left < right) {
+		//右边找小
+		while (left < right && arr[basei] <= arr[right]) {
+			right--;
+		}
+		//左边找大
+		while (left < right && arr[basei] >= arr[left]) {
+			left++;
+		}
+		Swap(&arr[left], &arr[right]);
+	}
+	Swap(&arr[basei], &arr[left]);
+
+	basei = left;
+
+	//[begin, basei - 1] basei [basei + 1, end]
+	QuickSort(arr, begin, basei - 1);
+	QuickSort(arr, basei + 1, end);
+}
+
+//向下调整算法，参数：数组 数组元素个数 开始向下调整的父节点索引
+void AdjustDown(HpDataType* arr, size_t size, size_t parent) {
+	//找较大的子节点，假设左子节点较大
+	size_t child = 2 * parent + 1;
+	//child索引不断增大，但不会超过数组元素个数
+	while (child < size) {
+		//假设错误，右子节点更大，更新索引
+		if (child + 1 < size && arr[child] < arr[child + 1]) {
+			child++;
+		}
+		//如果父节点小于等于子节点，交换两节点的值
+		if (arr[parent] <= arr[child]) {
+			Swap(&arr[parent], &arr[child]);
+			//更新父节点的索引，现在变成儿子了
+			parent = child;
+			//继续找儿子比较
+			child = 2 * parent + 1;
+		}
+		else {
+			break;
+		}
+	}
+}
+
+void HeapSort(HpDataType* arr, int size) {
+	// 建堆 升序建大根堆 降序建小根堆
+	for (int i = (size - 2) / 2; i >= 0; i--) {
+		AdjustDown(arr, size, i);
+	}
+
+	// 排序
+	int end = size - 1;
+	while (end > 0) {
+		Swap(&arr[0], &arr[end]);
+		AdjustDown(arr, end, 0);
+		end--;
+	}
+}
