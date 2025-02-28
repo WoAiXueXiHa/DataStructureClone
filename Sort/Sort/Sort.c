@@ -149,8 +149,8 @@ int MidSelect(int* arr, int left, int right) {
 		}
 	}
 }
-//快速排序
-void QuickSort(int* arr, int left, int right) {
+//Horae版本快排
+void QuickSort1(int* arr, int left, int right) {
 
 	if (left >= right)
 		return;
@@ -182,8 +182,31 @@ void QuickSort(int* arr, int left, int right) {
 	basei = left;
 
 	//[begin, basei - 1] basei [basei + 1, end]
-	QuickSort(arr, begin, basei - 1);
-	QuickSort(arr, basei + 1, end);
+	QuickSort1(arr, begin, basei - 1);
+	QuickSort1(arr, basei + 1, end);
+}
+//双指针法快排
+void QuickSort2(int* arr, int left, int right) {
+
+	if (left >= right)
+		return;
+
+	int prev = left;
+	int basei = left;
+	int cur = left + 1;
+
+	while (cur <= right) {
+		if (arr[cur] < arr[basei] && ++prev != cur) {
+			Swap(&arr[prev], &arr[cur]);
+		}
+		++cur;
+	}
+	Swap(&arr[basei], &arr[prev]);
+	basei = prev;
+
+	//[left, basei - 1] basei [basei + 1 , right]
+	QuickSort2(arr, left, basei - 1);
+	QuickSort2(arr, basei + 1, right);
 }
 
 //向下调整算法，参数：数组 数组元素个数 开始向下调整的父节点索引

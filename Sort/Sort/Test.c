@@ -27,10 +27,17 @@ void TestShellSort() {
 	PrintArray(arr, sizeof(arr) / sizeof(int));
 }
 
-void TestQuickSort() {
+void TestQuickSort1() {
 	int arr[] = { 2,4,1,3,6,7,9,8,5,0,41,14,36,12,33 };
 	PrintArray(arr, sizeof(arr) / sizeof(int));
-	QuickSort(arr, 0, sizeof(arr) / sizeof(int) - 1);
+	QuickSort1(arr, 0, sizeof(arr) / sizeof(int) - 1);
+	PrintArray(arr, sizeof(arr) / sizeof(int));
+}
+
+void TestQuickSort2() {
+	int arr[] = { 2,4,1,3,6,7,9,8,5,0,41,14,36,12,33 };
+	PrintArray(arr, sizeof(arr) / sizeof(int));
+	QuickSort2(arr, 0, sizeof(arr) / sizeof(int) - 1);
 	PrintArray(arr, sizeof(arr) / sizeof(int));
 }
 
@@ -48,6 +55,7 @@ int main() {
 	/*TestInsertSort();*/
 	/*TestShellSort();*/
 	/*TestQuickSort();*/
-	TestHeapSort();
+	/*TestHeapSort();*/
+	TestQuickSort2();
 	return 0;
 }

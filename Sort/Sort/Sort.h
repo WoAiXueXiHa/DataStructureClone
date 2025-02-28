@@ -31,7 +31,8 @@ void InsertSort(int* arr, size_t size);
 void ShellSort(int* arr, size_t size);
 
 //øÏÀŸ≈≈–Ú
-void QuickSort(int* arr, size_t left, size_t right);
+void QuickSort1(int* arr, int left, int right);
+void QuickSort2(int* arr, int left, int right);
 
 //∂—≈≈–Ú
 void AdjustDown(HpDataType* arr, size_t size, size_t parent);
