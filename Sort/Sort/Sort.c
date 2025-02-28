@@ -123,15 +123,48 @@ void ShellSort(int* arr, size_t size) {
 	}
 	
 }
-
+//三数取中
+int MidSelect(int* arr, int left, int right) {
+	int mid = (left + right) / 2;
+	if (arr[mid] > arr[left]) {
+		if (arr[mid] < arr[right]) {
+			return mid;
+		}
+		else if(arr[left] > arr[right]) { 
+			return left;
+		}
+		else {
+			return right;
+		}
+	}
+	else {// arr[mid] < arr[left]
+		if (arr[mid] > arr[right]) {
+			return mid;
+		}
+		else if(arr[left] < arr[right]) {
+			return left;
+		}
+		else {
+			return right;
+		}
+	}
+}
 //快速排序
 void QuickSort(int* arr, int left, int right) {
 
 	if (left >= right)
 		return;
 	int begin = left, end = right;
-	//第一轮
-	
+
+	////为了避免有序或者接近有序的最坏情况发生(O(N^2)),生成一个在[left,right]区间内的随机数作为basei
+	////[100, 200]
+	//int randi = rand() % (right - left); //数在100之内，不在区间里
+	//randi += left; //保证在区间[100, 200]里
+	////这样[100, 200]里任意一个数和left交换，就不是最小或者最大做basei了
+	//Swap(&arr[randi], &arr[left]);
+
+	int midi = MidSelect(arr, left, right);
+	Swap(&arr[midi], &arr[left]);
 	int basei = left;
 	while (left < right) {
 		//右边找小
