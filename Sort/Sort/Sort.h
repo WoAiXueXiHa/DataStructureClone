@@ -37,3 +37,6 @@ void QuickSort2(int* arr, int left, int right);
 //∂—≈≈–Ú
 void AdjustDown(HpDataType* arr, size_t size, size_t parent);
 void HeapSort(HpDataType* arr, int size); 
+
+//πÈ≤¢≈≈–Ú
+void MergeSort(int* arr, size_t size);

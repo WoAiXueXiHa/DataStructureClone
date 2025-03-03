@@ -247,3 +247,51 @@ void HeapSort(HpDataType* arr, int size) {
 		end--;
 	}
 }
+
+//归并排序
+void _MergeSort(int* arr, int* tmp, int begin, int end) {
+	//分治找最小子区间
+	if (begin == end) {
+		return;
+	}
+
+	int mid = (begin + end) / 2;
+	int begin1 = begin, end1 = mid;
+	int begin2 = mid + 1, end2 = end;
+	
+	_MergeSort(arr, tmp, begin1, end1);
+	_MergeSort(arr, tmp, begin2, end2);
+
+	//归并
+	int i = begin;
+	while (begin1 <= end1 && begin2 <= end2) {
+		if (arr[begin1] < arr[begin2]) {
+			tmp[i++] = arr[begin1++];
+		}
+		else {
+			tmp[i++] = arr[begin2++];
+		}
+	}
+
+	while (begin1 <= end1) {
+		tmp[i++] = arr[begin1++];
+	}
+	while (begin2 <= end2) {
+		tmp[i++] = arr[begin2++];
+	}
+
+	memcpy(arr + begin, tmp + begin, sizeof(int) * (end - begin + 1));
+}
+
+void MergeSort(int* arr, size_t size) {
+
+	int* tmp = (int*)malloc(sizeof(int) * size);
+	if (tmp == NULL) {
+		perror("malloc() err!");
+		return;
+	}
+
+	_MergeSort(arr, tmp, 0, size - 1);
+	free(tmp);
+	tmp = NULL;
+}
