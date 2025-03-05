@@ -22,7 +22,8 @@ void Swap(int* p1, int* p2);
 void BubbleSort(int* arr, size_t size);
 
 //—°‘Ò≈≈–Ú
-void SelectSort(int* arr, size_t size);
+void SelectSort1(int* arr, size_t size);
+void SelectSort2(int* arr, size_t size);
 
 //≤Â»Î≈≈–Ú
 void InsertSort(int* arr, size_t size);
@@ -36,7 +37,8 @@ void QuickSort2(int* arr, int left, int right);
 
 //∂—≈≈–Ú
 void AdjustDown(HpDataType* arr, size_t size, size_t parent);
-void HeapSort(HpDataType* arr, int size); 
+void HeapSort(HpDataType* arr, int size);
 
 //πÈ≤¢≈≈–Ú
 void MergeSort(int* arr, size_t size);
+void MergeSortNonR(int* arr, size_t size);
