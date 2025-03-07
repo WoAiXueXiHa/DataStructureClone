@@ -43,6 +43,24 @@ void TestQuickSort1() {
 	QuickSort1(arr, 0, sizeof(arr) / sizeof(int) - 1);
 	PrintArray(arr, sizeof(arr) / sizeof(int));
 }
+void TestQuickSort2() {
+	int arr[] = { 2,4,1,3,6,7,9,8,5,12,65,45,33,14 ,80,11,0,4,8,20,46,25};
+	PrintArray(arr, sizeof(arr) / sizeof(int));
+	QuickSort2(arr, 0, sizeof(arr) / sizeof(int) - 1);
+	PrintArray(arr, sizeof(arr) / sizeof(int));
+}
+void TestMergeSort() {
+	int arr[] = { 2,4,1,3,6,7,9,8,5,12,65,45,33,14 };
+	PrintArray(arr, sizeof(arr) / sizeof(int));
+	MergeSort(arr, sizeof(arr) / sizeof(int));
+	PrintArray(arr, sizeof(arr) / sizeof(int));
+}
+void TestCountSoort() {
+	int arr[] = { 7,7,1,2,0,6,8,8 };
+	PrintArray(arr, sizeof(arr) / sizeof(int));
+	CountSoort(arr, sizeof(arr) / sizeof(int));
+	PrintArray(arr, sizeof(arr) / sizeof(int));
+}
 
 
 int main() {
@@ -53,6 +71,9 @@ int main() {
 	/*TestInsertSort();*/
 	/*TestShellSort();*/
 	/*TestShellSort();*/
-	TestQuickSort1();
+	/*TestQuickSort1();*/
+	//TestQuickSort2();
+	/*TestMergeSort();*/
+	TestCountSoort();
 	return 0;
 }

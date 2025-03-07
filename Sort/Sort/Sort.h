@@ -42,3 +42,6 @@ void HeapSort(HpDataType* arr, int size);
 //πÈ≤¢≈≈–Ú
 void MergeSort(int* arr, size_t size);
 void MergeSortNonR(int* arr, size_t size);
+
+//º∆ ˝≈≈–Ú
+void CountSoort(int* arr, size_t size);

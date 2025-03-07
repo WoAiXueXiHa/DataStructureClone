@@ -162,14 +162,45 @@ void HeapSort(HpDataType* arr, int size) {
 		end--;
 	}
 }
+//三数取中
+int ThreeNumMid(int* arr, int left, int right) {
+	int mid = (left + right) / 2;
+
+	if (arr[mid] < arr[right]) {
+		if (arr[mid] > arr[left]) {
+			return mid;
+		}
+		else if(arr[left] < arr[right]) {
+			return left;
+		}
+		else {
+			return right;
+		}
+	}
+	else {// arr[mid] > arr[right]
+		if (arr[mid] < arr[left]) {
+			return mid;
+		}
+		else if (arr[right] < arr[left]) {
+			return left;
+		}
+		else {
+			return right;
+		}
+	}
+}
+
 //双指针法快排
 void QuickSort1(int* arr, int left, int right) {
 	if (left >= right)
 		return;
 
-	int prev = left, keyi = left;
-	int cur = left + 1;
+	// 新增三数取中逻辑
+	int mid = ThreeNumMid(arr, left, right);
+	Swap(&arr[left], &arr[mid]);
+	int keyi = left;
 
+	int prev = left, cur = left + 1;
 	while (cur <= right) {
 		if (arr[cur] < arr[keyi] && prev++ != cur) {
 			Swap(&arr[prev], &arr[cur]);
@@ -178,7 +209,131 @@ void QuickSort1(int* arr, int left, int right) {
 	}
 	Swap(&arr[prev], &arr[keyi]);
 	keyi = prev;
-	//[left, keyi - 1] keyi [keyi + 1, right]
+
 	QuickSort1(arr, left, keyi - 1);
 	QuickSort1(arr, keyi + 1, right);
+}
+
+
+
+//Hoare版本快排
+void QuickSort2(int* arr, int left, int right) {
+	if (left >= right)
+		return;
+	// 小区间选择走插入，可以减少90%左右的递归
+	if (right - left + 1 < 10)
+	{
+		InsertSort(arr + left, right - left + 1);
+	}
+	else {
+		//创建变量保存区间边界
+		int midi = ThreeNumMid(arr, left, right);
+		Swap(&arr[left], &arr[midi]);
+		int keyi = left;
+		int begin = left, end = right;
+
+		while (left < right) {
+			//右边找小
+			while (left < right && arr[keyi] <= arr[right]) {
+				--right;
+			}
+			//左边找大
+			while (left < right && arr[keyi] >= arr[left]) {
+				++left;
+			}
+			Swap(&arr[left], &arr[right]);
+		}
+
+		Swap(&arr[keyi], &arr[left]);
+		keyi = left;
+
+		// [begin, keyi-1]keyi[keyi+1, end]
+		QuickSort2(arr, begin, keyi - 1);
+		QuickSort2(arr, keyi + 1, end);
+
+	}
+	
+}
+
+//归并排序
+void _MergeSort(int* arr, int* tmp, int begin, int end) {
+	//递归到最小子区间
+	if (begin == end)
+		return;
+
+	int mid = (begin + end) / 2;
+	//[begin,mid] [mid+1,end]
+	_MergeSort(arr, tmp, begin, mid);
+	_MergeSort(arr, tmp, mid+1, end);
+
+	//归并排序 将大值尾插到tmp数组中
+	//分出两个区间范围值
+	int left1 = begin, right1 = mid;
+	int left2 = mid + 1, right2 = end;
+	int i = begin;
+	//判断两个区间的值谁更小
+	while (left1 <= right1 && left2 <= right2) {
+		if (arr[left1] < arr[left2]) {
+			tmp[i++] = arr[left1++];
+		}
+		else {
+			tmp[i++] = arr[left2++];
+		}
+	}
+	//任何一个区间结束，将剩余的直接尾插
+	while (left1 <= right1) {
+		tmp[i++] = arr[left1++];
+	}
+	while (left2 <= right2) {
+		tmp[i++] = arr[left2++];
+	}
+
+	//将排序好的tmp拷贝到arr中
+	memcpy(arr + begin, tmp + begin, sizeof(int) * (end - begin + 1));
+
+
+}
+void MergeSort(int* arr, size_t size) {
+	int* tmp = (int*)malloc(sizeof(int) * size);
+	if (tmp == NULL) {
+		perror("malloc() err!");
+		return;
+	}
+	_MergeSort(arr, tmp, 0, size - 1);
+	free(tmp);
+	tmp = NULL;
+}
+
+//计数排序
+void CountSoort(int* arr, size_t size) {
+	//找最大值和最小值
+	int min = arr[0], max = arr[0];
+	for (size_t i = 1; i < size; i++)
+	{
+		if (arr[i] < min) min = arr[i];
+		if (arr[i] > max) max = arr[i];
+	}
+	//创建临时数组用于统计次数
+	int range = max - min + 1;
+	int* tmp = (int*)malloc(sizeof(int) * range);
+	if (tmp == NULL) {
+		perror("malloc() err!");
+		return;
+	}
+	memset(tmp, 0, sizeof(int) * range);
+
+	//统计次数
+	for (size_t i = 0; i < size; i++)
+	{
+		tmp[arr[i] - min]++;
+	}
+	//排序
+	int j = 0;
+	for (size_t i = 0; i < range; i++)
+	{
+		while (tmp[i]--) {
+			arr[j++] = i + min;
+		}
+	}
+
 }
